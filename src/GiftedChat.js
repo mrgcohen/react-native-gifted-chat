@@ -285,6 +285,7 @@ class GiftedChat extends React.Component {
       this.onKeyboardWillShow(e);
     }
     this.setIsTypingDisabled(false);
+    this.scrollToBottom();
   }
 
   onKeyboardDidHide(e) {
@@ -295,17 +296,16 @@ class GiftedChat extends React.Component {
   }
 
   scrollToBottom(animated = true) {
-    const { inverted = true, bottomOffset } = this.props;
+    const { inverted = true } = this.props;
     if (this._messageContainerRef === null) {
       return;
     }
     if (inverted) {
-        this._messageContainerRef.scrollToEnd();
+        this._messageContainerRef.scrollToEnd({ animated });
     } else {
         this._messageContainerRef.scrollTo({ y: 0, animated });
     }
   }
-
 
   renderMessages() {
     const AnimatedView = this.props.isAnimated === true ? Animated.View : View;
@@ -319,8 +319,9 @@ class GiftedChat extends React.Component {
           {...this.props}
           invertibleScrollViewProps={this.invertibleScrollViewProps}
           messages={this.getMessages()}
+          onRefresh={this.props.onLoadEarlier}
+          refreshing={this.props.refreshing}
           ref={(component) => (this._messageContainerRef = component)}
-
         />
         {this.renderChatFooter()}
       </AnimatedView>
@@ -346,9 +347,7 @@ class GiftedChat extends React.Component {
     }
 
     this.props.onSend(messages).then(() => {
-      setTimeout(() => {
-        this.scrollToBottom();
-      }, 100);
+      this.scrollToBottom();
     });
 
     if (shouldResetInputToolbar === true) {
@@ -532,6 +531,7 @@ GiftedChat.defaultProps = {
   }),
   loadEarlier: false,
   onLoadEarlier: () => { },
+  refreshing: false,
   isLoadingEarlier: false,
   renderLoading: null,
   renderLoadEarlier: null,
@@ -590,6 +590,7 @@ GiftedChat.propTypes = {
   isAnimated: PropTypes.bool,
   loadEarlier: PropTypes.bool,
   onLoadEarlier: PropTypes.func,
+  refreshing: PropTypes.bool,
   isLoadingEarlier: PropTypes.bool,
   renderLoading: PropTypes.func,
   renderLoadEarlier: PropTypes.func,
