@@ -76,7 +76,7 @@ export default class MessageContainer extends React.PureComponent {
     }
     return null;
   }
-    
+
   scrollToEnd() {
     if (this.flatListRef) {
       this.flatListRef.scrollToEnd();
@@ -131,6 +131,8 @@ export default class MessageContainer extends React.PureComponent {
     return (
       <View style={styles.container}>
         <FlatList
+          onRefresh={this.props.onRefresh}
+          refreshing={this.props.refreshing}
           ref={(ref) => (this.flatListRef = ref)}
           extraData={this.props.extraData}
           keyExtractor={this.keyExtractor}
@@ -172,7 +174,8 @@ MessageContainer.defaultProps = {
   user: {},
   renderFooter: null,
   renderMessage: null,
-  onLoadEarlier: () => {},
+  refreshing: false,
+  onRefresh: () => {},
   inverted: true,
   loadEarlier: false,
   listViewProps: {},
@@ -186,7 +189,8 @@ MessageContainer.propTypes = {
   renderFooter: PropTypes.func,
   renderMessage: PropTypes.func,
   renderLoadEarlier: PropTypes.func,
-  onLoadEarlier: PropTypes.func,
+  onRefresh: PropTypes.func,
+  refreshing: PropTypes.bool,
   listViewProps: PropTypes.object,
   inverted: PropTypes.bool,
   loadEarlier: PropTypes.bool,
