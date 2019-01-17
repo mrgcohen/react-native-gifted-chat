@@ -522,7 +522,7 @@ GiftedChat.defaultProps = {
   placeholder: DEFAULT_PLACEHOLDER,
   messageIdGenerator: () => uuid.v4(),
   user: {},
-  onSend: () => Promise<any>,
+  onSend: () => Promise.resolve(),
   locale: null,
   timeFormat: TIME_FORMAT,
   dateFormat: DATE_FORMAT,
