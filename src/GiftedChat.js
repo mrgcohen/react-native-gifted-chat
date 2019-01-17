@@ -341,7 +341,7 @@ class GiftedChat extends React.Component {
     }
 
     this.props.onSend(messages);
-    this.scrollToBottom();
+    //this.scrollToBottom();
 
     if (shouldResetInputToolbar === true) {
       setTimeout(() => {
