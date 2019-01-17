@@ -345,10 +345,11 @@ class GiftedChat extends React.Component {
       this.resetInputToolbar();
     }
 
-    this.props.onSend(messages);
-    setTimeout(() => {  
-      this.scrollToBottom();      
-    }, 100);
+    this.props.onSend(messages).then(() => {
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 100);
+    });
 
     if (shouldResetInputToolbar === true) {
       setTimeout(() => {
@@ -521,7 +522,7 @@ GiftedChat.defaultProps = {
   placeholder: DEFAULT_PLACEHOLDER,
   messageIdGenerator: () => uuid.v4(),
   user: {},
-  onSend: () => { },
+  onSend: () => Promise<any>,
   locale: null,
   timeFormat: TIME_FORMAT,
   dateFormat: DATE_FORMAT,
