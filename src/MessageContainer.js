@@ -76,6 +76,12 @@ export default class MessageContainer extends React.PureComponent {
     }
     return null;
   }
+    
+  scrollToEnd() {
+    if (this.flatListRef) {
+      this.flatListRef.scrollToEnd();
+    }
+  }
 
   scrollTo(options) {
     if (this.flatListRef) {
