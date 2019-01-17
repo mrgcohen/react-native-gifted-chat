@@ -295,10 +295,15 @@ class GiftedChat extends React.Component {
   }
 
   scrollToBottom(animated = true) {
+    const { inverted = true } = this.props;
     if (this._messageContainerRef === null) {
       return;
     }
-    // this._messageContainerRef.scrollTo({ y: 0, animated });
+    if (inverted) {
+        this._messageContainerRef.scrollToEnd();
+    } else {
+        this._messageContainerRef.scrollTo({ y: 0, animated });
+    }
   }
 
 
